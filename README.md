@@ -22,7 +22,15 @@ sd-fuse 是一系列工具和脚本的集合, 用于固件的打包, 具体用�
 
 * 在电脑主机端使用
 * 推荐的操作系统：Ubuntu 18.04 及以上 64 位操作系统
-* 推荐运行此脚本初始化开发环境: https://github.com/friendlyarm/build-env-on-ubuntu-bionic
+  * Ubuntu bionic (Recommended)
+  * Ubuntu focal
+  * Ubuntu jammy
+
+* 推荐运行此脚本初始化开发环境
+
+```bash
+sudo ./build-env-on-ubuntu.sh
+```
 
 
 
