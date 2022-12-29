@@ -19,7 +19,6 @@
 *.zip
 *.changes
 rootfs*
-kernel*
 .vscode
 
 #
