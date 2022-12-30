@@ -1,0 +1,32 @@
+if ROCKCHIP_RK3328
+
+choice
+	prompt "RK3328 board select"
+
+config TARGET_EVB_RK3328
+	bool "RK3328 evaluation board"
+	select BOARD_LATE_INIT
+	help
+	  RK3328evb is a evaluation board for Rockchip rk3328,
+	  with full function and phisical connectors support like
+	  usb2.0 host ports, LVDS, JTAG, MAC, SDcard, HDMI, USB-2-serial...
+
+config TARGET_NANOPI_R2
+	bool "FriendlyElec NanoPi R2 Series"
+	select BOARD_LATE_INIT
+	select VENDOR_FRIENDLYELEC
+	help
+	  Support for FriendlyElec boards based on RK3328.
+
+endchoice
+
+config SYS_SOC
+	default "rockchip"
+
+config SYS_MALLOC_F_LEN
+	default 0x0800
+
+source "board/rockchip/evb_rk3328/Kconfig"
+source "board/rockchip/nanopi_r2/Kconfig"
+
+endif
