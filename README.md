@@ -1,7 +1,7 @@
 # nanopi-r6s
 本仓库用于存储 NanoPi R6S 开发套件的 Linux 系统固件，包括 U-Boot、Kernel、rootfs 等资源，以及相关构建工具。
 
-主要内容源自FriendlyARM 官方提供的 [sd-fuse_rk3588](https://github.com/friendlyarm/sd-fuse_rk3588)、[kernel-rockchip](https://github.com/friendlyarm/kernel-rockchip)，并在此基础上进行调整，以便于适用于 NanoPi R6S 套件。同时对 Kernel 和文件系统进行了一些修改，以满足本人的使用需求。
+主要内容源自FriendlyARM 官方提供的 [sd-fuse_rk3588](https://github.com/friendlyarm/sd-fuse_rk3588)、[kernel-rockchip](https://github.com/friendlyarm/kernel-rockchip)、[uboot-rockchip](https://github.com/friendlyarm/uboot-rockchip)，并在此基础上进行调整，以便于适用于 NanoPi R6S 套件。同时对 Kernel 和文件系统进行了一些修改，以满足本人的使用需求。
 
 关于 NanoPi R6S 的更多内容，可以参考《[NanoPi R6S 开发教程](https://getiot.tech/category/nanopir6s)》。
 
@@ -47,7 +47,10 @@ sudo ./build-env-on-ubuntu.sh
 * friendlywrt21-docker
 
 
-这些 OS 名称是分区映象文件存放的目录名，在脚本内亦有严格定义，所以不能改动，例如要制作 ubuntu-jammy-desktop 的 SD 固件, 可使用如下命令：
+这些 OS 名称是分区映象文件存放的目录名，在脚本内亦有严格定义，所以不能改动。
+
+例如，要制作 ubuntu-jammy-desktop 的 SD 固件，可使用如下命令：
+
 ```bash
 ./mk-sd-image.sh ubuntu-jammy-desktop-arm64
 ```
