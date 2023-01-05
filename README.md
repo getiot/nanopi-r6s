@@ -1,7 +1,7 @@
-# nanopi-r6s
+# NanoPi R6S
 本仓库用于存储 NanoPi R6S 开发套件的 Linux 系统固件，包括 U-Boot、Kernel、rootfs 等资源，以及相关构建工具。
 
-主要内容源自FriendlyARM 官方提供的 [sd-fuse_rk3588](https://github.com/friendlyarm/sd-fuse_rk3588)、[kernel-rockchip](https://github.com/friendlyarm/kernel-rockchip)、[uboot-rockchip](https://github.com/friendlyarm/uboot-rockchip)，并在此基础上进行调整，以便于适用于 NanoPi R6S 套件。同时对 Kernel 和文件系统进行了一些修改，以满足本人的使用需求。
+主要内容源自FriendlyARM 官方提供的 [sd-fuse_rk3588](https://github.com/friendlyarm/sd-fuse_rk3588)、[kernel-rockchip](https://github.com/friendlyarm/kernel-rockchip)、[uboot-rockchip](https://github.com/friendlyarm/uboot-rockchip)，并在此基础上进行调整，以便于适用于 NanoPi R6S 套件。同时对 Kernel 和文件系统进行了一些修改，以满足我们项目的使用需求。
 
 关于 NanoPi R6S 的更多内容，可以参考《[NanoPi R6S 开发教程](https://getiot.tech/category/nanopir6s)》。
 
@@ -93,7 +93,25 @@ cd sd-fuse_rk3588-master
 wget http://112.124.9.243/dvdfiles/rk3588/images-for-eflasher/ubuntu-jammy-desktop-arm64-images.tgz
 tar xvzf ubuntu-jammy-desktop-arm64-images.tgz
 ```
-解压后，会得到一个名为 ubuntu-jammy-desktop-arm64 的目录，可以根据项目需要，对目录里的文件进行修改，例如把 rootfs.img 替换成自已修改过的文件系统映象，或者自已编译的内核和 uboot 等，准备就绪后，输入如下命令将系统映像写入到 SD 卡（其中 /dev/sdX 是你的 SD 卡设备名）：
+解压后，会得到一个名为 ubuntu-jammy-desktop-arm64 的目录，内容如下：
+
+| 文件              | 描述       |
+| ----------------- | ---------- |
+| boot.img          |            |
+| dtbo.img          |            |
+| idbloader.img     |            |
+| info.conf         |            |
+| kernel.img        | 内核镜像   |
+| MiniLoaderAll.bin |            |
+| misc.img          |            |
+| parameter.txt     |            |
+| resource.img      | 内核设备树 |
+| rootfs.img        | 根文件系统 |
+| uboot.img         |            |
+| userdata.img      |            |
+
+可以根据项目需要，对目录里的文件进行修改，例如把 rootfs.img 替换成自已修改过的文件系统映象，或者自已编译的内核和 uboot 等，准备就绪后，输入如下命令将系统映像写入到 SD 卡（其中 /dev/sdX 是你的 SD 卡设备名）：
+
 ```bash
 sudo ./fusing.sh /dev/sdX ubuntu-jammy-desktop-arm64
 ```
@@ -228,7 +246,7 @@ git clone https://github.com/friendlyarm/uboot-rockchip -b nanopi6-v2017.09 --de
 
 
 
-## Q & A
+## FAQs
 
 ### 如何查询 SD 卡的设备文件名
 
