@@ -88,27 +88,21 @@ sudo ./build-env-on-ubuntu.sh
 下载本仓库到本地，然后下载并解压 ubuntu-jammy-desktop 系统的分区映象文件压缩包，由于 http 服务器带宽的关系，wget 命令可能会比较慢，推荐从网盘上下载同名的文件：
 
 ```bash
+# sd-fuse_rk3588
 git clone https://github.com/friendlyarm/sd-fuse_rk3588 -b master sd-fuse_rk3588-master
 cd sd-fuse_rk3588-master
+
+# ubuntu-jammy-desktop-arm64-images
 wget http://112.124.9.243/dvdfiles/rk3588/images-for-eflasher/ubuntu-jammy-desktop-arm64-images.tgz
 tar xvzf ubuntu-jammy-desktop-arm64-images.tgz
 ```
 解压后，会得到一个名为 ubuntu-jammy-desktop-arm64 的目录，内容如下：
 
-| 文件              | 描述       |
-| ----------------- | ---------- |
-| boot.img          |            |
-| dtbo.img          |            |
-| idbloader.img     |            |
-| info.conf         |            |
-| kernel.img        | 内核镜像   |
-| MiniLoaderAll.bin |            |
-| misc.img          |            |
-| parameter.txt     |            |
-| resource.img      | 内核设备树 |
-| rootfs.img        | 根文件系统 |
-| uboot.img         |            |
-| userdata.img      |            |
+```bash
+boot.img       info.conf          misc.img       r.img       userdata.img
+dtbo.img       kernel.img         parameter.txt  rootfs.img
+idbloader.img  MiniLoaderAll.bin  resource.img   uboot.img
+```
 
 可以根据项目需要，对目录里的文件进行修改，例如把 rootfs.img 替换成自已修改过的文件系统映象，或者自已编译的内核和 uboot 等，准备就绪后，输入如下命令将系统映像写入到 SD 卡（其中 /dev/sdX 是你的 SD 卡设备名）：
 
@@ -133,10 +127,15 @@ out/rk3588-sd-ubuntu-jammy-desktop-5.10-arm64-YYYYMMDD.img
 下载本仓库到本地，然后下载并解压分区映象压缩包，这里需要下载 ubuntu-jammy-desktop 和 eflasher 系统的文件：
 
 ```bash
+# sd-fuse_rk3588
 git clone https://github.com/friendlyarm/sd-fuse_rk3588 -b master sd-fuse_rk3588-master
 cd sd-fuse_rk3588-master
+
+# ubuntu-jammy-desktop-arm64-images
 wget http://112.124.9.243/dvdfiles/rk3588/images-for-eflasher/ubuntu-jammy-desktop-arm64-images.tgz
 tar xvzf ubuntu-jammy-desktop-arm64-images.tgz
+
+# emmc-flasher-images
 wget http://112.124.9.243/dvdfiles/rk3588/images-for-eflasher/emmc-flasher-images.tgz
 tar xvzf emmc-flasher-images.tgz
 ```
@@ -158,8 +157,11 @@ out/rk3588-eflasher-ubuntu-jammy-desktop-5.10-arm64-YYYYMMDD.img
 下载本仓库到本地，然后下载并解压分区映象压缩包：
 
 ```bash
+# sd-fuse_rk3588
 git clone https://github.com/friendlyarm/sd-fuse_rk3588 -b master sd-fuse_rk3588-master
 cd sd-fuse_rk3588-master
+
+# ubuntu-jammy-desktop-arm64-images
 wget http://112.124.9.243/dvdfiles/rk3588/images-for-eflasher/ubuntu-jammy-desktop-arm64-images.tgz
 tar xvzf ubuntu-jammy-desktop-arm64-images.tgz
 ```
@@ -190,8 +192,11 @@ sudo ./build-rootfs-img.sh ubuntu-jammy-desktop-arm64/rootfs ubuntu-jammy-deskto
 下载本仓库到本地，然后下载并解压分区映象压缩包：
 
 ```bash
+# sd-fuse_rk3588
 git clone https://github.com/friendlyarm/sd-fuse_rk3588 -b master sd-fuse_rk3588-master
 cd sd-fuse_rk3588-master
+
+# ubuntu-jammy-desktop-arm64-images
 wget http://112.124.9.243/dvdfiles/rk3588/images-for-eflasher/ubuntu-jammy-desktop-arm64-images.tgz
 tar xvzf ubuntu-jammy-desktop-arm64-images.tgz
 ```
@@ -232,8 +237,11 @@ MK_HEADERS_DEB=1 ./build-kernel.sh ubuntu-jammy-desktop-arm64
 下载本仓库到本地，然后下载并解压分区映象压缩包：
 
 ```bash
+# sd-fuse_rk3588
 git clone https://github.com/friendlyarm/sd-fuse_rk3588 -b master sd-fuse_rk3588-master
 cd sd-fuse_rk3588-master
+
+# ubuntu-jammy-desktop-arm64-images
 wget http://112.124.9.243/dvdfiles/rk3588/images-for-eflasher/ubuntu-jammy-desktop-arm64-images.tgz
 tar xvzf ubuntu-jammy-desktop-arm64-images.tgz
 ```
@@ -242,6 +250,30 @@ tar xvzf ubuntu-jammy-desktop-arm64-images.tgz
 export UBOOT_SRC=$PWD/uboot
 git clone https://github.com/friendlyarm/uboot-rockchip -b nanopi6-v2017.09 --depth 1 ${UBOOT_SRC}
 ./build-uboot.sh ubuntu-jammy-desktop-arm64
+```
+
+
+
+### 快速更新固件
+
+如果只是修改某个映像，例如内核映像，可以直接更新该分区，而不用重新打包整个系统固件。下表列出了 NanoPi R6S 系统的分区表
+
+| 分区           | 名称     | 容量  | 功能                              |
+| -------------- | -------- | ----- | --------------------------------- |
+| /dev/mmcblk2p1 | uboot    | 4M    | uboot.img                         |
+| /dev/mmcblk2p2 | misc     | 4M    | misc.img                          |
+| /dev/mmcblk2p3 | dtbo     | 4M    | dtbo.img                          |
+| /dev/mmcblk2p4 | resource | 16M   | 存放设备树映像 resource.img       |
+| /dev/mmcblk2p5 | kernel   | 40M   | 存放内核映像 kernel.img           |
+| /dev/mmcblk2p6 | boot     | 32M   | boot.img                          |
+| /dev/mmcblk2p7 | recovery | 32M   | 备份分区                          |
+| /dev/mmcblk2p8 | rootfs   | 3.7G  | 根文件系统 rootfs.img，默认已挂载 |
+| /dev/mmcblk2p9 | userdata | 25.1G | userdata.img                      |
+
+以内核映像 kernel.img 为例，可以使用 dd 命令更新固件：
+
+```bash
+dd if=/home/pi/kernel.img of=/dev/mmcblk2p5
 ```
 
 
