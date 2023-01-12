@@ -18,6 +18,15 @@
 		ethernet0 = &r8125_u25;
 	};
 
+	gpio_pps: pps-gpio {
+		compatible = "pps-gpio";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_pps>;
+
+		gpios = <&gpio1 RK_PB2 GPIO_ACTIVE_HIGH>;
+		assert-falling-edge;
+	};
+
 	gpio_keys: gpio-keys {
 		compatible = "gpio-keys";
 		pinctrl-names = "default";
@@ -110,6 +119,12 @@
 };
 
 &pinctrl {
+	gpio-pps {
+		pinctrl_pps: pps-pin {
+			rockchip,pins = <1 RK_PB2 RK_FUNC_GPIO &pcfg_pull_up>;
+		};
+	};
+
 	gpio-key {
 		key1_pin: key1-pin {
 			rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
